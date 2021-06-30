@@ -2,26 +2,24 @@ name: 'AppSync action'
 description: 'A Github action to update AppSync schema and resolvers. Written in Go.'
 author: 'Telia-oss'
 inputs:
-  params:
-    schema_file:
-      description: '*Optional.* .grapqh schema File provided by an output of a task, if you didn't specify `resolvers_file` this field is *Required.*.'
-      required: false
-    resolvers_file:
-      description: '*Optional.* .yml resolver String provided by an output of a task, if you didn't specify `schema_file` this field is *Required.*.'
-      required: false
-  source:
-    access_key_id:
-      required: true
-    secret_access_key:
-      required: true
-    session_token:
-      required: true
-    api_id:
-      description: 'AWS AppSync API key'
-      required: true
-    region_name: 
-      required: false
-      default: 'eu-west-1'
+  schema_file:
+    description: '*Optional.* .grapqh schema File provided by an output of a task, if you didn't specify `resolvers_file` this field is *Required.*.'
+    required: false
+  resolvers_file:
+    description: '*Optional.* .yml resolver String provided by an output of a task, if you didn't specify `schema_file` this field is *Required.*.'
+    required: false
+  access_key_id:
+    required: true
+  secret_access_key:
+    required: true
+  session_token:
+    required: true
+  api_id:
+    description: 'AWS AppSync API key'
+    required: true
+  region_name: 
+    required: false
+    default: 'eu-west-1'
 runs:
   using: 'docker'
   image: 'Dockerfile'
