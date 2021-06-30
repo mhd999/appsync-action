@@ -3,10 +3,8 @@ description: 'A Github action to update AppSync schema and resolvers. Written in
 author: 'Telia-oss'
 inputs:
   schema_file:
-    description: '*Optional.* .grapqh schema File provided by an output of a task, if you didn't specify `resolvers_file` this field is *Required.*.'
     required: false
   resolvers_file:
-    description: '*Optional.* .yml resolver String provided by an output of a task, if you didn't specify `schema_file` this field is *Required.*.'
     required: false
   access_key_id:
     required: true
