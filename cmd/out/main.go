@@ -21,7 +21,7 @@ func main() {
 		logger  = log.New(os.Stderr, "resource:", log.Lshortfile)
 	)
 
-	log.Printf("the input in main package: %v", input)
+	log.Printf("the input in main package: %v", json.NewDecoder(os.Stdin))
 
 	if err := decoder.Decode(&input); err != nil {
 		logger.Fatalf("Failed to decode to stdin: %s", err)
