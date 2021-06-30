@@ -21,10 +21,21 @@ func main() {
 		logger  = log.New(os.Stderr, "resource:", log.Lshortfile)
 	)
 
-	log.Printf("the input in main package: %v", json.NewDecoder(os.Stdin))
-
 	if err := decoder.Decode(&input); err != nil {
 		logger.Fatalf("Failed to decode to stdin: %s", err)
+	}
+
+	if input.Ci == "github" {
+		input.Source = make(map[string]string)
+		input.Params = make(map[string]string)
+		input.Source["api_id"] = input.ApiID
+		input.Source["access_key_id"] = input.AccessKeyId
+		input.Source["secret_access_key"] = input.SecretAccessKey
+		input.Source["session_token"] = input.SessionToken
+		input.Source["region_name"] = input.RegionName
+		input.Source["session_token"] = input.SessionToken
+		input.Params["schema_file"] = input.SchemaFile
+		input.Params["resolvers_file"] = input.ResolversFile
 	}
 
 	output, err := out.Command(input, logger)

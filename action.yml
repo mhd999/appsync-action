@@ -2,24 +2,25 @@ name: 'AppSync action'
 description: 'A Github action to update AppSync schema and resolvers. Written in Go.'
 author: 'Telia-oss'
 inputs:
-  params:
-    schema_file:
-      required: false
-    resolvers_file:
-      required: false
-  source:
-    access_key_id:
-      required: true
-    secret_access_key:
-      required: true
-    session_token:
-      required: true
-    api_id:
-      description: 'AWS AppSync API key'
-      required: true
-    region_name: 
-      required: false
-      default: 'eu-west-1'
+  ci:
+    required: true
+    default: 'github'
+  schema_file:
+    required: false
+  resolvers_file:
+    required: false
+  access_key_id:
+    required: true
+  secret_access_key:
+    required: true
+  session_token:
+    required: true
+  api_id:
+    description: 'AWS AppSync API key'
+    required: true
+  region_name: 
+    required: false
+    default: 'eu-west-1'
 runs:
   using: 'docker'
   image: 'Dockerfile'
