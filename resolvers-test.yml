@@ -1,0 +1,2634 @@
+resolvers:
+  - dataSource: layout_datasource
+    typeName: Query
+    fieldName: layout
+    requestMappingTemplate: '
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($context.args)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: pay_balance_datasource
+    typeName: Mutation
+    fieldName: payInvoiceBalance
+    requestMappingTemplate: '
+      #set( $event = {
+        "cancelUrl": $context.arguments.input.cancelUrl,
+        "clientIp": $context.arguments.input.clientIp,
+        "returnUrl": $context.arguments.input.returnUrl,
+        "provider": $context.arguments.input.provider,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"],
+        "accountId": $context.arguments.input.accountId
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: confirm_payment_datasource
+    typeName: Mutation
+    fieldName: confirmInvoicePayment
+    requestMappingTemplate: '
+      #set( $event = {
+        "purchaseId": $context.arguments.purchaseId,
+        "provider": $context.arguments.provider,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: user_parameters_datasource
+    typeName: Query
+    fieldName: user
+    requestMappingTemplate: '
+      #set( $payload = {
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: recently_paid_invoice_datasource
+    typeName: UserData
+    fieldName: hasRecentlyPaidInvoice
+    requestMappingTemplate: '
+      #set( $event = {
+        "ctsession": $context.request.headers.ctsession,
+          "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: subscription_datasource
+    typeName: Query
+    fieldName: subscription
+    requestMappingTemplate: '
+      #set( $event = {
+        "type": "Single",
+        "phoneNumber": $context.arguments.phoneNumber,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: subscription_datasource
+    typeName: Query
+    fieldName: subscriptions
+    requestMappingTemplate: '
+      #set( $event = {
+        "type": "List",
+        "clientId": $context.request.headers.clientid,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: subscription_datasource
+    typeName: AccountData
+    fieldName: subscription
+    requestMappingTemplate: '
+      #set( $event = {
+        "type": "Single",
+        "phoneNumber": $context.arguments.phoneNumber,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"],
+        "accountId": $context.source.id
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: subscription_datasource
+    typeName: AccountData
+    fieldName: subscriptions
+    requestMappingTemplate: '
+      #set( $event = {
+        "type": "List",
+        "clientId": $context.request.headers.clientid,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "identityToken" : $context.request.headers["identity-token"],
+        "accountId": $context.source.id
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: specified_usage_datasource
+    typeName: SubscriptionData
+    fieldName: invoicedService
+    requestMappingTemplate: '
+      #set( $payload = {
+        "services": $context.arguments.serviceCodes,
+        "invoiceId": $context.arguments.invoiceId,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"],
+        "phoneNumber": $context.source.phoneNumber,
+        "accountId": $context.source.accountId
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: specified_usage_datasource
+    typeName: SubscriptionData
+    fieldName: unbilledService
+    requestMappingTemplate: '
+      #set( $payload = {
+        "services": $context.arguments.serviceCodes,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"],
+        "phoneNumber": $context.source.phoneNumber,
+        "accountId": $context.source.accountId
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: invoice_list_datasource
+    typeName: SubscriptionData
+    fieldName: invoices
+    requestMappingTemplate: '
+      #set( $payload = {
+        "type": "SUBSCRIPTION",
+        "accountId": $context.source.accountId,
+        "startDate": $context.arguments.startDate,
+        "phoneNumber": $context.source.phoneNumber,
+        "skip": $context.arguments.skip,
+        "take": $context.arguments.take,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: invoice_details_datasource
+    typeName: SubscriptionData
+    fieldName: invoice
+    requestMappingTemplate: '
+      #set( $payload = {
+        "type": "SUBSCRIPTION",
+        "id": $context.arguments.id,
+        "accountId": $context.source.accountId,
+        "phoneNumber": $context.source.phoneNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: order_list_datasource
+    typeName: SubscriptionData
+    fieldName: orders
+    requestMappingTemplate: '
+    #set( $payload = {
+      "accountId": $context.source.accountId,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"],
+      "phoneNumber": $context.source.phoneNumber,
+      "pageSize" : $context.arguments.pageSize,
+      "pageNumber" : $context.arguments.pageNumber
+    } )
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: order_list_datasource
+    typeName: AccountData
+    fieldName: orders
+    requestMappingTemplate: '
+    #set( $payload = {
+      "accountId": $context.source.id,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"],
+      "pageSize" : $context.arguments.pageSize,
+      "pageNumber" : $context.arguments.pageNumber
+    } )
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: order_get_datasource
+    typeName: SubscriptionData
+    fieldName: order
+    requestMappingTemplate: '
+    #set( $payload = {
+      "accountId": $context.source.accountId,
+      "orderId" : $context.arguments.orderId,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: order_get_datasource
+    typeName: AccountData
+    fieldName: order
+    requestMappingTemplate: '
+    #set( $payload = {
+      "orderId" : $context.arguments.orderId,
+      "accountId": $context.source.id,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: transfer_owner_datasource
+    typeName: Mutation
+    fieldName: transferOwner
+    requestMappingTemplate: '
+      #set( $event = {
+        "firstName": $context.arguments.input.firstName,
+        "lastName": $context.arguments.input.lastName,
+        "zipCode": $context.arguments.input.zipCode,
+        "ssn": $context.arguments.input.ssn,
+        "email": $context.arguments.input.email,
+        "transferredNumber": $context.arguments.input.transferredNumber,
+        "contactNumber": $context.arguments.input.contactNumber,
+        "breakageFeeAccepted": $context.arguments.input.breakageFeeAccepted,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: user_offer_datasource
+    typeName: Query
+    fieldName: offer
+    requestMappingTemplate: '
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($context.args)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result))
+        #return
+      #end
+
+      $util.toJson($context.result)
+    '
+
+  - dataSource: defer_invoice_datasource
+    typeName: Mutation
+    fieldName: deferInvoice
+    requestMappingTemplate: '
+      #set( $event = {
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "credit_check_datasource"
+    typeName: Query
+    fieldName: credit
+    requestMappingTemplate: '
+      #set( $event = {
+        "organizationNumber": $context.arguments.organizationNumber,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "products_availability_datasource"
+    typeName: Query
+    fieldName: productsAvailability
+    requestMappingTemplate: '
+      #set( $event = {
+        "skus": $context.arguments.skus,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid
+      } )
+
+      {
+        "version": "2018-05-29",
+        "operation": "Invoke",
+        "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: account_update_datasource
+    typeName: Mutation
+    fieldName: accountUpdate
+    requestMappingTemplate: '
+      #set( $event = {
+        "distributionCode": $context.arguments.input.distributionCode,
+        "legalOwnerEmail": $context.arguments.input.legalOwnerEmail,
+        "invoiceReceiver": $context.arguments.input.invoiceReceiver,
+        "accountId": $context.arguments.input.accountId,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: user_offering_datasource
+    typeName: SubscriptionData
+    fieldName: userOffering
+    requestMappingTemplate: '
+      #set( $payload = {
+        "phoneNumber": $context.source.phoneNumber,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: new_offering_details_datasource
+    typeName: SubscriptionData
+    fieldName: newOfferingDetails
+    requestMappingTemplate: '
+      #set( $payload = {
+        "subscription": $context.source,
+        "phoneNumber": $context.source.phoneNumber,
+        "offering": $context.arguments.offering,
+        "products": $context.arguments.products,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: order_sim_card_status_datasource
+    typeName: SubscriptionData
+    fieldName: orderSimCardStatus
+    requestMappingTemplate: '
+      #set( $payload = {
+        "accountId": $context.source.accountId,
+        "phoneNumber": $context.source.phoneNumber.localNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: additional_products_datasource
+    typeName: SubscriptionData
+    fieldName: additionalProducts
+    requestMappingTemplate: '
+    #if($context.arguments.manualProducts)
+      #set($manualProducts = $context.arguments.manualProducts)
+    #elseif ($context.arguments.manualProduct)
+      #set($manualProducts = [$context.arguments.manualProduct])
+    #else
+      #set($manualProducts = [])
+    #end
+
+    #set( $payload = {
+      "accountId": $context.source.accountId,
+      "phoneNumber": $context.source.phoneNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"],
+      "productCategory" : $context.arguments.productCategory,
+      "mainProductGroup" : $context.arguments.mainProductGroup,
+      "manualProducts" : $manualProducts
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: additional_products_datasource
+    typeName: AdditionalSimCard
+    fieldName: product
+    requestMappingTemplate: '
+    #set( $payload = {
+      "accountId": $context.source.accountId,
+      "phoneNumber": $context.source.mainNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"],
+      "manualProducts" : [$context.source.productCode]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data[0])
+    '
+
+  - dataSource: order_additional_products_datasource
+    typeName: Mutation
+    fieldName: orderAdditionalProduct
+    requestMappingTemplate: '
+    #set( $payload = {
+      "phoneNumber": $context.arguments.phoneNumber,
+      "additionalProducts": $context.arguments.additionalProducts,
+      "email": $context.arguments.email,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: get_call_forwarding_datasource
+    typeName: SubscriptionData
+    fieldName: callForwarding
+    requestMappingTemplate: '
+      #set( $payload = {
+        "phoneNumber": $context.source.phoneNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: put_call_forwarding_datasource
+    typeName: Mutation
+    fieldName: updateCallForwarding
+    requestMappingTemplate: '
+      #set( $payload = {
+        "settings": $context.arguments.settings,
+        "phoneNumber": $context.arguments.phoneNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: communication_preferences_datasource
+    typeName: SubscriptionData
+    fieldName: communicationPreferences
+    requestMappingTemplate: '
+    #set( $payload = {
+      "phoneNumber": $context.source.phoneNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: update_communication_preferences_datasource
+    typeName: Mutation
+    fieldName: updateCommunicationPreferences
+    requestMappingTemplate: '
+    #set( $payload = {
+      "settings": $context.arguments.settings,
+      "phoneNumber": $context.arguments.phoneNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: payment_balance_datasource
+    typeName: AccountData
+    fieldName: paymentBalance
+    requestMappingTemplate: '
+    #set( $payload = {
+      "type": "ACCOUNT",
+      "accountId": $context.source.id,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: invoice_list_datasource
+    typeName: AccountData
+    fieldName: invoices
+    requestMappingTemplate: '
+    #set( $payload = {
+      "type": "ACCOUNT",
+      "accountId": $context.source.id,
+      "startDate": $context.arguments.startDate,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "skip": $context.arguments.skip,
+      "take": $context.arguments.take,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: invoice_details_datasource
+    typeName: AccountData
+    fieldName: invoice
+    requestMappingTemplate: '
+    #set( $payload = {
+      "type": "ACCOUNT",
+      "accountId": $context.source.id,
+      "id": $context.arguments.id,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: current_invoice_datasource
+    typeName: AccountData
+    fieldName: currentInvoice
+    requestMappingTemplate: '
+    #set( $payload = {
+      "type": "ACCOUNT",
+      "accountId": $context.source.id,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: payment_history_datasource
+    typeName: AccountData
+    fieldName: paymentHistory
+    requestMappingTemplate: '
+    #set( $payload = {
+      "accountId": $context.source.id,
+      "skip": $context.arguments.paging.skip,
+      "take": $context.arguments.paging.take,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      #foreach ($result in $context.result.data)
+        #if($result.type == "INVOICE")
+          #set($ignore = $result.put("__typename", "InvoiceHistoryItem"))
+        #else
+          #set($ignore = $result.put("__typename", "PaymentHistoryItem"))
+        #end
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: current_invoice_datasource
+    typeName: SubscriptionData
+    fieldName: currentInvoice
+    requestMappingTemplate: '
+    #set( $payload = {
+      "type": "SUBSCRIPTION",
+      "accountId": $context.source.accountId,
+      "phoneNumber": $context.source.phoneNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: payment_balance_datasource
+    typeName: SubscriptionData
+    fieldName: paymentBalance
+    requestMappingTemplate: '
+    #set( $payload = {
+      "type": "SUBSCRIPTION",
+      "accountId": $context.source.accountId,
+      "phoneNumber": $context.source.phoneNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "BatchInvoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: account_data_datasource
+    typeName: Query
+    fieldName: account
+    requestMappingTemplate: '
+    #set( $payload = {
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"],
+      "requestType": "single",
+      "accountId": $context.arguments.accountId
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: account_data_datasource
+    typeName: Query
+    fieldName: accounts
+    requestMappingTemplate: '
+    #set( $payload = {
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"],
+      "requestType": "list"
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: directory_listings_datasource
+    typeName: Query
+    fieldName: directoryListings
+    requestMappingTemplate: '
+    {
+        "version" : "2018-05-29",
+        "operation": "Invoke",
+        "payload": $util.toJson($context.args)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: update_directory_listing_datasource
+    typeName: Mutation
+    fieldName: updateDirectoryListing
+    requestMappingTemplate: '
+    #set( $payload = {
+      "directoryListingLevel": $context.arguments.directoryListingLevel,
+      "phoneNumber": $context.arguments.phoneNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: generate_identity_login_url_datasource
+    typeName: Mutation
+    fieldName: generateIdentityLoginUrl
+    requestMappingTemplate: '
+    #set( $payload = {
+      "redirectUrl": $context.arguments.redirectUrl,
+      "tokenUrl": $context.arguments.tokenUrl,
+      "scope": $context.arguments.scope,
+      "prompt": $context.arguments.prompt,
+      "authLevel": $context.arguments.authLevel
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: generate_identity_logout_url_datasource
+    typeName: Mutation
+    fieldName: generateIdentityLogoutUrl
+    requestMappingTemplate: '
+    #set( $payload = {
+      "redirectUrl": $context.arguments.redirectUrl
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: create_identity_token_datasource
+    typeName: Mutation
+    fieldName: createIdentityToken
+    requestMappingTemplate: '
+    #set( $payload = {
+      "state": $context.arguments.state,
+      "code": $context.arguments.code
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: refresh_identity_token_datasource
+    typeName: Mutation
+    fieldName: refreshIdentityToken
+    requestMappingTemplate: '
+    #set( $payload = {
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+      "version" : "2018-05-29",
+      "operation": "Invoke",
+      "payload": $util.toJson($payload)
+    }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: product_user_update_datasource
+    typeName: Mutation
+    fieldName: productUserUpdate
+    requestMappingTemplate: '
+      #set( $payload = {
+        "productUser": $context.arguments.productUser,
+        "phoneNumber": $context.arguments.phoneNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type, $context.result.error.data)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: change_subscription_status_datasource
+    typeName: Mutation
+    fieldName: changeSubscriptionStatus
+    requestMappingTemplate: '
+      #set( $payload = {
+        "status": $context.arguments.status.status,
+        "reason": $context.arguments.status.reason,
+        "phoneNumber": $context.arguments.phoneNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: change_offering_datasource
+    typeName: Mutation
+    fieldName: changeOffering
+    requestMappingTemplate: '
+    #set( $payload = {
+      "offering": $context.arguments.offering,
+      "products": $context.arguments.products,
+      "campaignId": $context.arguments.campaignId,
+      "phoneNumber": $context.arguments.phoneNumber,
+      "ctsession" : $context.request.headers.ctsession,
+      "correlationId": $context.request.headers.correlationid,
+      "clientId": $context.request.headers.clientid,
+      "identityToken" : $context.request.headers["identity-token"]
+    } )
+
+    {
+        "version" : "2018-05-29",
+        "operation": "Invoke",
+        "payload": $util.toJson($payload)
+    }
+  '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "user_usage_datasource"
+    typeName: SubscriptionData
+    fieldName: usage
+    requestMappingTemplate: '
+      #set( $payload = {
+        "phoneNumber": $context.source.phoneNumber.localNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"],
+        "accountId": $context.source.accountId
+      } )
+       {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: user_offer_interactions_datasource
+    typeName: Mutation
+    fieldName: postOfferInteraction
+    requestMappingTemplate: '
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($context.args)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result))
+        #return
+      #end
+
+      $util.toJson($context.result)
+    '
+
+  - dataSource: "spotify_activation_datasource"
+    typeName: SubscriptionData
+    fieldName: spotifyActivation
+    requestMappingTemplate: '
+      #set( $event = {
+        "phoneNumber": $context.source.phoneNumber.localNumber,
+        "redirectUrl" : $context.arguments.redirectUrl,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: "spotify_activation_update_datasource"
+    typeName: Mutation
+    fieldName: spotifyActivationUpdate
+    requestMappingTemplate: '
+      #set( $event = {
+        "code": $context.arguments.code,
+        "phoneNumber" : $context.arguments.phoneNumber,
+        "redirectUrl" : $context.arguments.redirectUrl,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: "webdeal_datasource"
+    typeName: Query
+    fieldName: webdeal
+    requestMappingTemplate: '
+      #set( $event = {
+        "clientId": $context.request.headers.clientid,
+        "correlationId": $context.request.headers.correlationid,
+        "cart": $context.arguments.cart
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($context.args)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "invoice_card_payment_status_datasource"
+    typeName: UserData
+    fieldName: invoiceCardPaymentStatus
+    requestMappingTemplate: '
+      #set( $event = {
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "email_order_datasource"
+    typeName: Mutation
+    fieldName: emailOrder
+    requestMappingTemplate: '
+      #set( $event = {
+        "input": $context.arguments.input
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: invoice_details_datasource
+    typeName: InvoiceHistoryItem
+    fieldName: invoice
+    requestMappingTemplate: '
+      #set( $payload = {
+        "type": "ACCOUNT",
+        "id": $context.source.reference,
+        "accountId": $context.source.accountId,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+        "version" : "2018-05-29",
+        "operation": "BatchInvoke",
+        "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: user_roles_datasource
+    typeName: SubscriptionData
+    fieldName: roles
+    requestMappingTemplate: '
+      #set( $payload = {
+        "resourceType": "SUBSCRIPTION",
+        "resourceId": $context.source.phoneNumber.localNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+        "version" : "2018-05-29",
+        "operation": "BatchInvoke",
+        "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: user_roles_datasource
+    typeName: AccountData
+    fieldName: roles
+    requestMappingTemplate: '
+      #set( $payload = {
+        "resourceType": "ACCOUNT",
+        "resourceId": $context.source.id,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+
+      {
+        "version" : "2018-05-29",
+        "operation": "BatchInvoke",
+        "payload": $util.toJson($payload)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: "nba_offer_datasource"
+    typeName: Query
+    fieldName: nbaOffer
+    requestMappingTemplate: '
+      #set( $event = {
+        "userId": $context.arguments.userId,
+        "userName": $context.arguments.userName,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "uToken": $context.request.headers.utoken
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: "nba_interactions_datasource"
+    typeName: Mutation
+    fieldName: nbaPostOfferInteraction
+    requestMappingTemplate: '
+      #set( $event = {
+        "interactionUrl": $context.arguments.interactionUrl,
+        "userName": $context.arguments.userName,
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "uToken": $context.request.headers.utoken
+      } )
+      {
+          "version" : "2018-05-29",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+  - dataSource: "long_query_datasource_sfn"
+    typeName: Query
+    fieldName: longQuery
+    requestMappingTemplate: '
+      $util.qr($ctx.stash.put("queryId", $util.autoId()))
+      {
+        "version": "2018-05-29",
+        "method": "POST",
+        "resourcePath": "/",
+        "params": {
+          "headers": {
+            "content-type": "application/x-amz-json-1.0",
+            "x-amz-target":"AWSStepFunctions.StartExecution"
+          },
+          "body": {
+            "stateMachineArn": "arn:aws:states:eu-west-1:398461455917:stateMachine:long-query",
+            "input": "{ \"queryId\": \"$ctx.stash.queryId\", \"userId\": \"$ctx.arguments.userId\" }"
+          }
+        }
+      }
+    '
+
+    responseMappingTemplate: '
+      {
+        "id": "${ctx.stash.queryId}",
+        "status": "PENDING"
+      }
+    '
+
+  - dataSource: "long_query_datasource_appsync"
+    typeName: Mutation
+    fieldName: publishLongQueryResult
+    requestMappingTemplate: '
+      {
+        "version": "2017-02-28",
+        "payload": {
+          "id": "${ctx.arguments.result.id}",
+          "status": "${ctx.arguments.result.status}",
+          "results": "${ctx.arguments.result.results}"
+        }
+      }
+    '
+    responseMappingTemplate: $util.toJson($ctx.arguments.result)
+
+  - dataSource: "create_offering_order_datasource"
+    typeName: Mutation
+    fieldName: createOfferingOrder
+    requestMappingTemplate: '
+      #set( $event = {
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "subscriptions": $context.arguments.subscriptions
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "on_order_status_update_datasource"
+    typeName: Subscription
+    fieldName: onOrderStatusUpdate
+    requestMappingTemplate: '
+      #set($ttl = $util.time.nowEpochSeconds() + 1800)
+      {
+        "version" : "2017-02-28",
+        "operation" : "PutItem",
+        "key" : {
+            "ORDER_ID" : { "S" : "${context.arguments.id}" }
+        },
+        "attributeValues" : {
+          "LAST_REQUESTED": { "N": $util.time.nowEpochMilliSeconds() },
+          "ORDER_TTL": { "N": $ttl }
+        }
+      }
+    '
+    responseMappingTemplate: '
+      #set( $entry = {
+        "id": $context.arguments.id,
+        "state": "INITIAL",
+        "lastModified": $util.time.nowISO8601()
+        } )
+
+      $util.toJson($entry)
+    '
+
+  - dataSource: "submit_offering_order_datasource"
+    typeName: Mutation
+    fieldName: submitOfferingOrder
+    requestMappingTemplate: '
+      #set( $event = {
+        "ctsession": $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "orderId": $context.arguments.orderId
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "publish_order_status_update_datasource"
+    typeName: Mutation
+    fieldName: publishOrderStatusUpdate
+    requestMappingTemplate: '
+      {
+        "version": "2017-02-28",
+        "payload": {
+          "id": "${context.arguments.result.id}",
+          "status": "${context.arguments.result.status}",
+          "results": "${context.arguments.result.results}"
+        }
+      }
+    '
+    responseMappingTemplate: $util.toJson($context.arguments.result)
+
+
+  - dataSource: "x_lines_info_datasource"
+    typeName: AccountData
+    fieldName: xLinesInfo
+    requestMappingTemplate: '
+      #set( $event = {
+        "ctsession": $context.request.headers.ctsession,
+        "accountId": $context.source.id,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "detailed": $context.arguments.detailed
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "topups_datasource"
+    typeName: SubscriptionData
+    fieldName: topups
+    requestMappingTemplate: '
+      #set( $event = {
+        "phoneNumber": $context.source.phoneNumber,
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"],
+        "zone": $context.arguments.filter.zone,
+        "countryCode": $context.arguments.filter.countryCode,
+        "accountId": $context.source.accountId
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "BatchInvoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      #foreach ($result in $context.result.data)
+        #if($result.type == "DOMESTIC")
+          #set($ignore = $result.put("__typename", "DomesticTopup"))
+        #elseif($result.type == "ROAMING")
+          #set($ignore = $result.put("__typename", "RoamingTopup"))
+        #elseif($result.type == "DATA_FREE")
+          #set($ignore = $result.put("__typename", "FreeDataTopup"))
+        #elseif($result.type == "DATA_BOOST")
+          #set($ignore = $result.put("__typename", "DataBoostTopup"))
+        #elseif($result.type == "DATA_BOOST_FREE")
+          #set($ignore = $result.put("__typename", "FreeDataBoostTopup"))
+        #end
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: "geographic_site_datasource"
+    typeName: Query
+    fieldName: geographicSites
+    requestMappingTemplate: '
+      #set( $event = {
+        "offset": $context.arguments.offset,
+        "limit": $context.arguments.limit
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      #foreach ($result in $context.result.data)
+        #set($ignore = $result.put("__typename", "StoreGeographicSite"))
+      #end
+
+      $util.toJson($context.result.data)
+    '
+  - dataSource: "geographic_site_datasource"
+    typeName: Query
+    fieldName: geographicSite
+    requestMappingTemplate: '
+      #set( $event = {
+        "id": $context.arguments.id
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      #set($ignore = $context.result.data.put("__typename", "StoreGeographicSite"))
+
+      $util.toJson($context.result.data)
+    '
+  - dataSource: "countries_appsync_datasource"
+    typeName: Query
+    fieldName: countries
+    requestMappingTemplate: '
+      #set( $event = {
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+
+  - dataSource: "additional_token_datasource"
+    typeName: Mutation
+    fieldName: generateAdditionalToken
+    requestMappingTemplate: '
+      #set( $event = {
+        "ctsession" : $context.request.headers.ctsession,
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.request.headers["identity-token"]
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '
+
+  - dataSource: "additional_token_datasource"
+    typeName: IdentityToken
+    fieldName: additionalToken
+    requestMappingTemplate: '
+      #set( $event = {
+        "correlationId": $context.request.headers.correlationid,
+        "clientId": $context.request.headers.clientid,
+        "identityToken" : $context.source.token
+      } )
+      {
+          "version" : "2017-02-28",
+          "operation": "Invoke",
+          "payload": $util.toJson($event)
+      }
+    '
+    responseMappingTemplate: '
+      #if($context.error)
+        $util.error($context.error.message, "INTERNAL")
+      #end
+
+      #if($context.result.error)
+        $util.error($context.result.error.message, $context.result.error.type)
+      #end
+
+      ## If the data source invocation is null, we return null.
+      #if($util.isNull($context.result.data))
+        #return
+      #end
+
+      $util.toJson($context.result.data)
+    '

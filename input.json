@@ -1,0 +1,13 @@
+{
+    "params": {
+        "resolvers_file": "resolvers-test.yml",
+        "schema_file": "schema-test.graphql"
+    },
+    "source": {
+        "access_key_id": "ASIAVZRRHJYWUIBEBZBS",
+        "secret_access_key": "VV0Sbn5IKG726Z+zSMQH52+AgbKi025pH2vLm2eq",
+        "session_token": "FwoGZXIvYXdzEGUaDNSYFZXmmQ/wh7fOdyKCASmsQl2vR2nFHM5uM4q215xIuJKeNoYYTyy8gTnXfGxGtjs6qjbp86qPbFSBR6mKd9cTv50CGDgT7SE4Rc8JaaFIO3mlAvcefaSxYEwE/pYmtkffs7zbmgkSG2qFoOhcAMDEWW/WtBw1osmrZyS8W/yUJbEIUlhjbD0ZMVD7yMV/AhAojOLz8gUyKGKDYRLIN6bkNX4I+SLItE746+xHpsjQSKfy9y9t3dCl+kZ3kVbV0DE=",
+        "api_id": "ivjm3j6jfvandnm4433w36euyy",
+        "region_name": "eu-west-1"
+    }
+}
