@@ -20,7 +20,7 @@ func main() {
 		encoder = json.NewEncoder(os.Stdout)
 		logger  = log.New(os.Stderr, "resource:", log.Lshortfile)
 	)
-	log.Println("input:", input)
+	logger.Println("input:", decoder)
 	if err := decoder.Decode(&input); err != nil {
 		logger.Fatalf("Failed to decode to stdin: %s", err)
 	}

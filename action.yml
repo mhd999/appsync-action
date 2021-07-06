@@ -26,7 +26,13 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.ci}}
-    - ${{ inputs.ci}}
+    - ${{ inputs.resolvers_file}}
+    - ${{ inputs.schema_file}}
+    - ${{ inputs.access_key_id}}
+    - ${{ inputs.secret_access_key}}
+    - ${{ inputs.session_token}}
+    - ${{ inputs.api_id}}
+    - ${{ inputs.region_name}}
 branding:
   color: 'red'
   icon: 'message-circle'
