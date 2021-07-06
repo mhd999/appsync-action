@@ -53,9 +53,7 @@ func main() {
 
 		log.Printf(" build source and param from github input.Source: %v", input.Source)
 		log.Printf(" build source and param from github input.Params: %v", input.Params)
-	}
-
-	if err := decoder.Decode(&input); err != nil {
+	} else if err := decoder.Decode(&input); err != nil {
 		logger.Fatalf("Failed to decode to stdin: %s", err)
 	}
 
