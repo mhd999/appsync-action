@@ -6,18 +6,18 @@ type (
 	}
 
 	InputJSON struct {
-		Params  map[string]string `json:"params"`
-		Source  map[string]string `json:"source"`
-		Version version           `json:"version"`
+		Params  map[string]string `json:"params,omitempty"`
+		Source  map[string]string `json:"source,omitempty"`
+		Version version           `json:"version,omitempty"`
 		// in case of using Github actions
-		Ci string `json:"ci"`
-		ResolversFile  string `json:"resolvers_file"`
-		SchemaFile  string 	`json:"schema_file"`
-		AccessKeyId  string `json:"access_key_id"`
-		SecretAccessKey  string `json:"secret_access_key"`
-		SessionToken  string `json:"session_token"`
-		ApiID  string `json:"api_id"`
-		RegionName  string `json:"region_name"`
+		Ci              string `json:"ci,omitempty"`
+		ResolversFile   string `json:"resolvers_file,omitempty"`
+		SchemaFile      string `json:"schema_file,omitempty"`
+		AccessKeyId     string `json:"access_key_id,omitempty"`
+		SecretAccessKey string `json:"secret_access_key,omitempty"`
+		SessionToken    string `json:"session_token,omitempty"`
+		ApiID           string `json:"api_id,omitempty"`
+		RegionName      string `json:"region_name,omitempty"`
 	}
 
 	metadata struct {
