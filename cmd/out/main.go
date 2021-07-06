@@ -33,6 +33,14 @@ func main() {
 		schemaFile := os.Getenv("INPUT_SCHEMA_FILE")
 		resolversFile := os.Getenv("INPUT_RESOLVERS_FILE")
 
+		log.Printf(" build source and param from github sessionToken: %s", sessionToken)
+		log.Printf(" build source and param from github secretAccessKey: %s", secretAccessKey)
+		log.Printf(" build source and param from github accessKeyId: %s", accessKeyId)
+		log.Printf(" build source and param from github regionName: %s", regionName)
+		log.Printf(" build source and param from github apiID: %s", apiID)
+		log.Printf(" build source and param from github schemaFile: %s", schemaFile)
+		log.Printf(" build source and param from github resolversFile: %s", resolversFile)
+
 		input.Source = make(map[string]string)
 		input.Params = make(map[string]string)
 		input.Source["api_id"] = apiID
@@ -42,6 +50,9 @@ func main() {
 		input.Source["region_name"] = regionName
 		input.Params["schema_file"] = schemaFile
 		input.Params["resolvers_file"] = resolversFile
+
+		log.Printf(" build source and param from github input.Source: %v", input.Source)
+		log.Printf(" build source and param from github input.Params: %v", input.Params)
 	}
 
 	if err := decoder.Decode(&input); err != nil {
