@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 
@@ -21,24 +20,32 @@ func main() {
 		encoder = json.NewEncoder(os.Stdout)
 		logger  = log.New(os.Stderr, "resource:", log.Lshortfile)
 	)
-	fmt.Println(os.Environ())
 
-	logger.Println("input:", decoder)
-	if err := decoder.Decode(&input); err != nil {
-		logger.Fatalf("Failed to decode to stdin: %s", err)
-	}
+	whichCi := os.Getenv("INPUT_CI")
+	log.Printf(" which ci: %s", whichCi)
 
-	if input.Ci == "github" {
+	if whichCi == "github" {
+		sessionToken := os.Getenv("INPUT_SESSION_TOKEN")
+		secretAccessKey := os.Getenv("INPUT_SECRET_ACCESS_KEY")
+		accessKeyId := os.Getenv("INPUT_ACCESS_KEY_ID")
+		regionName := os.Getenv("INPUT_REGION_NAME")
+		apiID := os.Getenv("INPUT_API_ID")
+		schemaFile := os.Getenv("INPUT_SCHEMA_FILE")
+		resolversFile := os.Getenv("INPUT_RESOLVERS_FILE")
+
 		input.Source = make(map[string]string)
 		input.Params = make(map[string]string)
-		input.Source["api_id"] = input.ApiID
-		input.Source["access_key_id"] = input.AccessKeyId
-		input.Source["secret_access_key"] = input.SecretAccessKey
-		input.Source["session_token"] = input.SessionToken
-		input.Source["region_name"] = input.RegionName
-		input.Source["session_token"] = input.SessionToken
-		input.Params["schema_file"] = input.SchemaFile
-		input.Params["resolvers_file"] = input.ResolversFile
+		input.Source["api_id"] = apiID
+		input.Source["access_key_id"] = accessKeyId
+		input.Source["secret_access_key"] = secretAccessKey
+		input.Source["session_token"] = sessionToken
+		input.Source["region_name"] = regionName
+		input.Params["schema_file"] = schemaFile
+		input.Params["resolvers_file"] = resolversFile
+	}
+
+	if err := decoder.Decode(&input); err != nil {
+		logger.Fatalf("Failed to decode to stdin: %s", err)
 	}
 
 	output, err := out.Command(input, logger)
