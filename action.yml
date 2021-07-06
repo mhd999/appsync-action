@@ -21,9 +21,18 @@ inputs:
   region_name: 
     required: false
     default: 'eu-west-1'
+  params:
+    required: false
+  source:
+    required: false
+  version:
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.ci}}
+    - ${{ inputs.ci}}
 branding:
   color: 'red'
   icon: 'message-circle'
