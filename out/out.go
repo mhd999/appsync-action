@@ -15,7 +15,6 @@ var env = os.Getenv("ENV")
 
 // Command will update the resource.
 func Command(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
-	log.Printf("the inputs %v", input)
 	apiID, ok := input.Source["api_id"]
 	if !ok {
 		return outOutputJSON{}, errors.New("api_id not set")
