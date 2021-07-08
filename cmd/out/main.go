@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -33,7 +32,7 @@ func main() {
 		}
 
 		for _, f := range files {
-			fmt.Println(f.Name())
+			log.Println(f.Name())
 		}
 
 		sessionToken := os.Getenv("INPUT_SESSION_TOKEN")
