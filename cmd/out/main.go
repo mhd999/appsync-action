@@ -27,7 +27,7 @@ func main() {
 
 	if whichCi == "github" {
 		log.Println("Start listing files")
-		files, err := ioutil.ReadDir("/github")
+		files, err := ioutil.ReadDir("/github/workspace")
 		if err != nil {
 			log.Fatal(err)
 		}
