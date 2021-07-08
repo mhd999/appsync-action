@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/telia-oss/appsync-resource/out"
 )
@@ -33,6 +35,20 @@ func main() {
 
 		for _, f := range files {
 			log.Println(f.Name())
+		}
+
+		var gihubFiles []string
+
+		root := "/github"
+		errg := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+			gihubFiles = append(gihubFiles, path)
+			return nil
+		})
+		if errg != nil {
+			panic(errg)
+		}
+		for _, file := range gihubFiles {
+			fmt.Println(file)
 		}
 
 		sessionToken := os.Getenv("INPUT_SESSION_TOKEN")
