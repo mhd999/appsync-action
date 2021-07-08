@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -48,7 +47,8 @@ func main() {
 			panic(errg)
 		}
 		for _, file := range gihubFiles {
-			fmt.Println(file)
+			log.Println("files in github")
+			log.Println(file)
 		}
 
 		sessionToken := os.Getenv("INPUT_SESSION_TOKEN")
