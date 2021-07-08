@@ -38,7 +38,7 @@ func main() {
 
 		var gihubFiles []string
 
-		root := "/github/workspace/github/workspace"
+		root := "github"
 		errg := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 			gihubFiles = append(gihubFiles, path)
 			return nil
