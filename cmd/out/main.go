@@ -26,6 +26,7 @@ func main() {
 	whichCi := os.Getenv("INPUT_CI")
 
 	if whichCi == "github" {
+		log.Println("Start listing files")
 		files, err := ioutil.ReadDir("./")
 		if err != nil {
 			log.Fatal(err)
