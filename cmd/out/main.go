@@ -46,8 +46,8 @@ func main() {
 		if errg != nil {
 			panic(errg)
 		}
+		log.Println("files in github")
 		for _, file := range gihubFiles {
-			log.Println("files in github")
 			log.Println(file)
 		}
 
