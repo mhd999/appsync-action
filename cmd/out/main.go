@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -24,6 +26,15 @@ func main() {
 	whichCi := os.Getenv("INPUT_CI")
 
 	if whichCi == "github" {
+		files, err := ioutil.ReadDir("./")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		for _, f := range files {
+			fmt.Println(f.Name())
+		}
+
 		sessionToken := os.Getenv("INPUT_SESSION_TOKEN")
 		secretAccessKey := os.Getenv("INPUT_SECRET_ACCESS_KEY")
 		accessKeyId := os.Getenv("INPUT_ACCESS_KEY_ID")
