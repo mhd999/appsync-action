@@ -48,7 +48,7 @@ func main() {
 		}
 		log.Println("files in github")
 		for _, file := range gihubFiles {
-			log.Println(file)
+			log.Printf("The file %s", file)
 		}
 
 		sessionToken := os.Getenv("INPUT_SESSION_TOKEN")
